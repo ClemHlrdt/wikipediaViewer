@@ -1,6 +1,7 @@
-var url1 = "https://en.wikipedia.org/w/api.php?action=query&titles=";
-var url2 = "&prop=revisions&rvprop=content&format=json";
+var url1 = "https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=";
+var url2 = "&format=json&callback=?";
 var value = "Main%20Page";
+var url;
 
 var textInput = $("input:text"); //retrieve input
 
@@ -42,8 +43,22 @@ $("#search-button").click(function(event) {
 
 
   //concatenate the url
-  var url = url1 + result + url2;
+  url = url1 + result + url2;
   console.log(url);
   $("#jumbo2").css("display", "block")
 
+  var ajaxRequest = function() {
+    $.getJSON(url, null, function(item) {
+        console.log(item.query.pages);
+        var pages = item.query.pages;
+        console.log(pages);
+    });
+
+  }
+
+
+
+
+
+  ajaxRequest();
 })

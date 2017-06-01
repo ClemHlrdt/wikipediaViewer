@@ -28,8 +28,6 @@ body {
       body #search-block #search-button:hover {
         background-color: #2980B9; }
   body #jumbo2 {
-    min-width: 1140px;
-    min-height: 400px;
     display: none; }
 
 /*# sourceMappingURL=style.css.map */
