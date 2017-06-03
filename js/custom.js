@@ -1,6 +1,6 @@
 var url1 = "https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=";
 var url2 = "&format=json&callback=?";
-var value = "Main%20Page";
+//var value = "Main%20Page";
 var url;
 
 var textInput = $("input:text"); //retrieve input
@@ -22,13 +22,15 @@ $("#search-button").click(function(event) {
   var input = directInput.replace(/[^a-zA-Z ]/g, ""); //remove every characters except alphanumerical and "_"
   //console.log("REGEX: " + input)
   var input2 = input.split(" "); //put input in an array
-  //console.log("input2: " + input2);
+  console.log("input2: " + input2);
 
   //loop to lowercase entry and the uppercase every first letter of each word
   for (var i = 0; i < input2.length; i++) {
     input2[i] = input2[i].toLowerCase();
     input2[i] = firstToUpper(input2[i]);
   }
+
+
 
   //console.log(input2);
   //remove spaces in the array
@@ -39,7 +41,7 @@ $("#search-button").click(function(event) {
 
   //add %20 between every items of the array
   var result = input3.join('%20')
-  //console.log(result);
+  console.log(result);
 
 
   //concatenate the url
