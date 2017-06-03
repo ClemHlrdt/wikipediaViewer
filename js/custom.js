@@ -50,10 +50,26 @@ $("#search-button").click(function(event) {
   $("#jumbo2").css("display", "block")
 
   var ajaxRequest = function() {
-    $.getJSON(url, null, function(item) {
-        console.log(item.query.pages);
-        var pages = item.query.pages;
-        console.log(pages);
+    // $.getJSON(url, null, function(item) {
+    //     console.log(item.query.pages);
+    //     var pages = item.query.pages;
+    //     console.log(pages);
+    // });
+    var box = $('#jumbo2');
+
+    $.ajax({
+            url: url,
+            timeout: 4000,
+            dataType: "json",
+            success: function(data){
+                console.log("okok");
+                var res = data.search;
+                alert(res);
+            },
+
+            error: function() {
+                box.html("Sorry something happened");
+            }
     });
 
   }
