@@ -1,82 +1,85 @@
 var url1 = "https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=";
-var url2 = "&format=json&callback=?";
+var url2 = "&prop=info&inprop=url&utf8=&format=json";
 //var value = "Main%20Page";
 var url;
-
+var box = $('#jumbo2');
 var textInput = $("input:text"); //retrieve input
 
+//On load, focus on the input
+$(document).ready(function() {
+    $("#searchInput").focus();
+});
 
 //When button is pressed...
 $("#search-button").click(function(event) {
-  event.preventDefault();// prevent default action
+    event.preventDefault(); // prevent default action
 
-  //Function to Uppercase the first letter of a string
+    $("#jumbo2").children('#result').empty(); //clear
+    $('#search-block').css('display', 'none');
 
-  function firstToUpper(string){
+
+    var directInput = textInput.val(); //get value of input
+
+    var input = directInput.replace(/[^a-zA-Z ]/g, ""); //remove every characters except alphanumerical and "_"
+    //console.log("REGEX: " + input)
+    var input2 = input.split(" "); //put input in an array
+    console.log("input2: " + input2);
+
+    //Function to Uppercase the first letter of a string
+
+    function firstToUpper(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
-  }
+    }
+
+    //loop to lowercase entry and the uppercase every first letter of each word
+    for (var i = 0; i < input2.length; i++) {
+        input2[i] = input2[i].toLowerCase();
+        input2[i] = firstToUpper(input2[i]);
+    }
+
+    //remove spaces in the array
+    input3 = input2.filter(function(entry) {
+        return entry.trim() != ''
+    });
+    //console.log("here" + input3);
+
+    //add %20 between every items of the array
+    var result = input3.join('%20')
+
+    //concatenate the url
+    url = url1 + result + url2;
+
+    $("#jumbo2").css("display", "block")
 
 
-  var directInput = textInput.val(); //get value of input
+    ajaxRequest(); //call to the ajax requests
+})
 
-  var input = directInput.replace(/[^a-zA-Z ]/g, ""); //remove every characters except alphanumerical and "_"
-  //console.log("REGEX: " + input)
-  var input2 = input.split(" "); //put input in an array
-  console.log("input2: " + input2);
-
-  //loop to lowercase entry and the uppercase every first letter of each word
-  for (var i = 0; i < input2.length; i++) {
-    input2[i] = input2[i].toLowerCase();
-    input2[i] = firstToUpper(input2[i]);
-  }
-
-
-
-  //console.log(input2);
-  //remove spaces in the array
-  input3 = input2.filter(function(entry) {
-    return entry.trim() != ''
-  });
-  //console.log("here" + input3);
-
-  //add %20 between every items of the array
-  var result = input3.join('%20')
-  console.log(result);
-
-
-  //concatenate the url
-  url = url1 + result + url2;
-  console.log(url);
-  $("#jumbo2").css("display", "block")
-
-  var ajaxRequest = function() {
-    // $.getJSON(url, null, function(item) {
-    //     console.log(item.query.pages);
-    //     var pages = item.query.pages;
-    //     console.log(pages);
-    // });
-    var box = $('#jumbo2');
-
+//Ajax request
+var ajaxRequest = function() {
     $.ajax({
-            url: url,
-            timeout: 4000,
-            dataType: "json",
-            success: function(data){
-                console.log("okok");
-                var res = data.search;
-                alert(res);
-            },
-
-            error: function() {
-                box.html("Sorry something happened");
+        url: url,
+        timeout: 4000,
+        dataType: "jsonp",
+        success: function(data) {
+            var resultat = data.query.search;
+            console.log(resultat);
+            if (resultat == "") {
+                box.append('<p>Sorry, no resultat was found</p>')
+            } else {
+                $.each(resultat, function(i, val) {
+                    var title = val.title;
+                    var url = title.replace(/ /g, "_");
+                    //console.log(url);
+                    //console.log("Result "+ i + ":" + val.title);
+                    box.append('<a href="https://en.wikipedia.org/wiki/' + url + '" target="_blank"><p id="result"' + i + '" class="text-center result">' + val.title + '</p></a>');
+                });
             }
+        },
+
+        error: function() {
+            box.html("Sorry something happened");
+        }
     });
 
-  }
-
-
-
-
-
-  ajaxRequest();
-})
+}
