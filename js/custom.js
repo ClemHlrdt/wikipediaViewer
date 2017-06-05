@@ -8,6 +8,7 @@ var textInput = $("input:text"); //retrieve input
 //On load, focus on the input
 $(document).ready(function() {
     $("#searchInput").focus();
+
 });
 
 //When button is pressed...
@@ -27,9 +28,7 @@ $("#search-button").click(function(event) {
 
     //Function to Uppercase the first letter of a string
 
-    function firstToUpper(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-    }
+
 
     //loop to lowercase entry and the uppercase every first letter of each word
     for (var i = 0; i < input2.length; i++) {
@@ -55,6 +54,11 @@ $("#search-button").click(function(event) {
     ajaxRequest(); //call to the ajax requests
 })
 
+function firstToUpper(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+
 //Ajax request
 var ajaxRequest = function() {
     $.ajax({
@@ -65,14 +69,30 @@ var ajaxRequest = function() {
             var resultat = data.query.search;
             console.log(resultat);
             if (resultat == "") {
-                box.append('<p>Sorry, no resultat was found</p>')
+                box.append('<p class="text-center noresult">Sorry, no results were found</p>')
             } else {
                 $.each(resultat, function(i, val) {
                     var title = val.title;
                     var url = title.replace(/ /g, "_");
+                    var details = val.snippet;
+                    console.log('length = ' + resultat.length)
                     //console.log(url);
                     //console.log("Result "+ i + ":" + val.title);
-                    box.append('<a href="https://en.wikipedia.org/wiki/' + url + '" target="_blank"><p id="result"' + i + '" class="text-center result">' + val.title + '</p></a>');
+                    box.append('<div id="list-container" class="mx-auto box resultContainer' + i + '"></div>')
+                    $('<a href="https://en.wikipedia.org/wiki/' + url + '" target="_blank"><p id="result"' + i + '" class="text-center result">' + val.title + '</p></a>').appendTo($(".resultContainer" + i));
+
+                    $('<p class="details">' + "\""+ details + "...\"" + '</p>').appendTo('.resultContainer' + i);
+
+                });
+                box.append('<div class="row" id="newSearch"</div>');
+                $('<button  type="submit" class="mx-auto btn btn-primary" id="reload">New Search</button>').appendTo('#newSearch');
+                $("#reload").click(function(e) {
+                  e.preventDefault();
+                //$("#jumbo2").children('#result').remove(); //clear
+                $('#jumbo2').css('display', 'none');
+                
+                $('#search-block').css('display', 'block');
+
                 });
             }
         },

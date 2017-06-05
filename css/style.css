@@ -28,16 +28,32 @@ body {
       body #search-block #search-button:hover {
         background-color: #2980B9; }
   body #jumbo2 {
-    display: none; }
+    background-color: #2C3E50;
+    display: none;
+    padding-top: 30px; }
+    body #jumbo2 .box {
+      padding: 15px 30px 15px 30px;
+      margin-bottom: 10px;
+      background-color: #ECF0F1;
+      width: 80%; }
+      body #jumbo2 .box:hover {
+        border-style: solid;
+        border-left: thick solid #33CCCC; }
     body #jumbo2 .result {
-      color: #ECF0F1;
-      border-style: solid;
-      border-color: #ECF0F1;
+      font-family: "Poppins", sans-serif;
+      font-weight: bold;
       font-size: 1.5em;
-      display: inline;
-      padding: 10px;
-      margin: 10px;
-      float: left;
-      background-color: #2980B9; }
+      color: #2C3E50;
+      border-style: solid;
+      border-color: #ECF0F1; }
+    body #jumbo2 .details {
+      color: #2C3E50;
+      font-style: italic; }
+      body #jumbo2 .details:hover {
+        font-weight: bold; }
+    body #jumbo2 .noresult {
+      color: #2C3E50;
+      font-size: 1.5em;
+      margin: 0; }
 
 /*# sourceMappingURL=style.css.map */

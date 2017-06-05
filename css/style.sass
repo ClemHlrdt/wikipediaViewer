@@ -37,19 +37,35 @@ body
       border-style: none
       position: relative
       top: 25px
-
-
       &:hover
         background-color: $blue
   #jumbo2
+    background-color: $dark-blue
     display: none
+    padding-top: 30px
+
+    .box
+      padding: 15px 30px 15px 30px
+      margin-bottom: 10px
+      background-color: $white
+      width: 80%
+      &:hover
+        border-style: solid
+        border-left: thick solid $green
+
     .result
-      color: $white
+      font-family: "Poppins", sans-serif
+      font-weight: bold
+      font-size: 1.5em
+      color: $dark-blue
       border-style: solid
       border-color: $white
+    .details
+      color: $dark-blue
+      font-style: italic
+      &:hover
+        font-weight: bold
+    .noresult
+      color: $dark-blue
       font-size: 1.5em
-      display: inline
-      padding: 10px
-      margin: 10px
-      float: left
-      background-color: $blue
+      margin: 0
