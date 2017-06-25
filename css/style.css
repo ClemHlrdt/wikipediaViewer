@@ -27,10 +27,16 @@ body {
       top: 25px; }
       body #search-block #search-button:hover {
         background-color: #2980B9; }
+      body #search-block #search-button .random {
+        color: #ECF0F1; }
+        body #search-block #search-button .random:hover {
+          text-decoration: none; }
   body #jumbo2 {
     background-color: #2C3E50;
     display: none;
     padding-top: 30px; }
+    body #jumbo2 .list-result {
+      list-style-type: none; }
     body #jumbo2 .box {
       padding: 15px 30px 15px 30px;
       margin-bottom: 10px;

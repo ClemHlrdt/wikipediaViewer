@@ -3,6 +3,7 @@ var url2 = "&prop=info&inprop=url&utf8=&format=json";
 //var value = "Main%20Page";
 var url;
 var box = $('#jumbo2');
+
 var textInput = $("input:text"); //retrieve input
 
 //On load, focus on the input
@@ -65,12 +66,18 @@ var ajaxRequest = function() {
         url: url,
         timeout: 4000,
         dataType: "jsonp",
+        /* On success...*/
         success: function(data) {
-            var resultat = data.query.search;
+            var resultat = data.query.search; //stores the results into resultat
             console.log(resultat);
+            //if result is null -> no items
             if (resultat == "") {
                 box.append('<p class="text-center noresult">Sorry, no results were found</p>')
+            /* else, create a new ul and append it to box
+               each result is displayed in a list item*/
             } else {
+                box.append('<ul class="list-result"></ul>');
+                var list = $('.list-result');
                 $.each(resultat, function(i, val) {
                     var title = val.title;
                     var url = title.replace(/ /g, "_");
@@ -78,19 +85,24 @@ var ajaxRequest = function() {
                     console.log('length = ' + resultat.length)
                     //console.log(url);
                     //console.log("Result "+ i + ":" + val.title);
-                    box.append('<div id="list-container" class="mx-auto box resultContainer' + i + '"></div>')
-                    $('<a href="https://en.wikipedia.org/wiki/' + url + '" target="_blank"><p id="result"' + i + '" class="text-center result">' + val.title + '</p></a>').appendTo($(".resultContainer" + i));
 
-                    $('<p class="details">' + "\""+ details + "...\"" + '</p>').appendTo('.resultContainer' + i);
+                    list.append('<li id="list-container" class="mx-auto box resultContainer' + i + '"></li>'); //create an li
+                    $('<a href="https://en.wikipedia.org/wiki/' + url + '" target="_blank"><p id="result"' + i + '" class="text-center result">' + val.title + '</p></a>').appendTo($(".resultContainer" + i)); //add the title + link
+
+                    $('<p class="details">' + "\""+ details + "...\"" + '</p>').appendTo('.resultContainer' + i); //add details
 
                 });
-                box.append('<div class="row" id="newSearch"</div>');
+                box.append('<div class="row" id="newSearch"</div>'); // a new div for the button
                 $('<button  type="submit" class="mx-auto btn btn-primary" id="reload">New Search</button>').appendTo('#newSearch');
+
+                //when New Search is clicked...
                 $("#reload").click(function(e) {
-                  e.preventDefault();
-                //$("#jumbo2").children('#result').remove(); //clear
+                  e.preventDefault(); //preventDefault action
+                $(".list-result").remove(); //clear
+                $("#newSearch").remove();
+                //$(this).parent().remove();
                 $('#jumbo2').css('display', 'none');
-                
+
                 $('#search-block').css('display', 'block');
 
                 });
